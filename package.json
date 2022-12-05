@@ -1,0 +1,7 @@
+{
+  "name": "avito-tech-internship",
+  "packageManager": "yarn@3.3.0",
+  "workspaces": [
+    "frontend"
+  ]
+}
