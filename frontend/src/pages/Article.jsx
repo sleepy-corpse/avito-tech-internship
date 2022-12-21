@@ -5,5 +5,5 @@ export default function Article() {
     <h1>
       Article
     </h1>
-  )
+  );
 }
