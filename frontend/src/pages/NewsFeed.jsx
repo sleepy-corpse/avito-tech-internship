@@ -1,12 +1,53 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import List from '@mui/material/List';
+import {
+  AppBar,
+  Container,
+  ListItem,
+  Paper,
+  Skeleton,
+  Stack,
+  Typography,
+} from '@mui/material';
+import { useSelector } from 'react-redux';
+import { selectors } from '../slices/newsSlice';
+import NewsItem from '../components/NewsItem';
+
+function Placeholder() {
+  const listItems = [0, 1, 3, 4, 5];
+  return (
+    <>
+      {listItems.map((i) => (
+        <ListItem key={i}>
+          <Stack width="100%">
+            <Skeleton sx={{ width: '60%', height: '2rem' }} />
+            <Skeleton sx={{ width: '20%', height: '1rem' }} />
+            <Skeleton sx={{ width: '30%', height: '1rem' }} />
+            <Skeleton sx={{ width: '20%', height: '1rem' }} />
+          </Stack>
+        </ListItem>
+      ))}
+    </>
+  );
+}
 
 export default function NewsFeed() {
+  const newsObj = useSelector(selectors.selectEntities);
+  const news = Object.values(newsObj).reverse();
   return (
-    <Link to="/article">
-      <h1>
-        HelloQ\!\\
-      </h1>
-    </Link>
+    <Container sx={{ mt: '50px' }}>
+      <AppBar>
+        <Typography variant="h5" sx={{ m: 1 }}>
+          Hacker News
+        </Typography>
+      </AppBar>
+      <Paper elevation={4}>
+        <List>
+          {news.length
+            ? news.map((newsItem) => <NewsItem news={newsItem} key={newsItem.id} />)
+            : <Placeholder />}
+        </List>
+      </Paper>
+    </Container>
   );
 }
