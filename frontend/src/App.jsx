@@ -2,57 +2,42 @@ import React, { useEffect } from 'react';
 import {
   Switch,
   Route,
+  useHistory,
 } from 'react-router-dom';
+import AppBar from '@mui/material/AppBar';
+import Button from '@mui/material/Button';
+import Typography from '@mui/material/Typography';
+import IconButton from '@mui/material/IconButton';
+import ReplayIcon from '@mui/icons-material/Replay';
 import { Provider } from 'react-redux';
-import axios from 'axios';
 import Article from './pages/Article';
 import NewsFeed from './pages/NewsFeed';
-import paths from './routes';
 import store from './slices';
-import { actions as newsActions } from './slices/newsSlice';
-
-const fetchNews = (isUsersClick = false) => {
-  const currentNewsIds = store.getState().news.ids;
-  axios.get(paths.getNewsListUrl())
-    .then((resp) => {
-      const newsIdList = resp.data.slice(0, 100);
-      const idsToFetch = currentNewsIds.length
-        ? newsIdList.filter((newsId) => !currentNewsIds.includes(newsId))
-        : newsIdList;
-      const newsPromises = idsToFetch.map((newsId) => axios.get(paths.getNewsByIdUrl(newsId)));
-      return Promise.all(newsPromises);
-    })
-    .then((newsResponses) => {
-      const news = newsResponses.map((resp) => {
-        const { data } = resp;
-        /* sometimes the response data is null, so to avoid errors
-        I return an object with only one field that contain the id of the current request */
-        if (!data) {
-          return {
-            id: Number(resp.request.responseURL.split('/').at(-1).split('.')[0]),
-          };
-        }
-        return data;
-      });
-      if (news.length) {
-        store.dispatch(newsActions.addNews(news));
-      }
-    })
-    .finally(() => {
-      if (!isUsersClick) {
-        setTimeout(fetchNews, 60000);
-      }
-    });
-};
+import fetchNews from './fetchNews';
 
 export default function App() {
   useEffect(() => {
     fetchNews();
   }, []);
+  const history = useHistory();
+
+  const redirectToMainPage = () => {
+    history.push('/');
+  };
   return (
     <Provider store={store}>
+      <AppBar sx={{ px: 2, flexDirection: 'row', justifyContent: 'space-between' }}>
+        <Button sx={{ display: 'block', color: 'white' }} onClick={redirectToMainPage}>
+          <Typography variant="h5">
+            Hacker News
+          </Typography>
+        </Button>
+        <IconButton sx={{ display: 'block', color: 'white', borderRadius: 0 }}>
+          <ReplayIcon sx={{ fontSize: '2rem' }} />
+        </IconButton>
+      </AppBar>
       <Switch>
-        <Route path="/article">
+        <Route path="/article/:id">
           <Article />
         </Route>
         <Route path="/">

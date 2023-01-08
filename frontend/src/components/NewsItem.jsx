@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { useHistory } from 'react-router-dom';
 import {
   ListItem,
   ListItemButton,
@@ -10,10 +11,15 @@ import {
 export default function NewsFeed(props) {
   const { news } = props;
   const newsDate = new Date(news.time * 1000);
+  const history = useHistory();
+
+  const goToArticle = (id) => () => {
+    history.push(`/article/${id}`);
+  };
 
   return (
     <ListItem>
-      <ListItemButton>
+      <ListItemButton onClick={goToArticle(news.id)}>
         <ListItemText
           disableTypography
           primary={(

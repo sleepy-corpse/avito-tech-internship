@@ -1,13 +1,11 @@
 import React from 'react';
 import List from '@mui/material/List';
 import {
-  AppBar,
   Container,
   ListItem,
   Paper,
   Skeleton,
   Stack,
-  Typography,
 } from '@mui/material';
 import { useSelector } from 'react-redux';
 import { selectors } from '../slices/newsSlice';
@@ -34,17 +32,18 @@ function Placeholder() {
 export default function NewsFeed() {
   const newsObj = useSelector(selectors.selectEntities);
   const news = Object.values(newsObj).reverse();
+
   return (
     <Container sx={{ mt: '50px' }}>
-      <AppBar>
-        <Typography variant="h5" sx={{ m: 1 }}>
-          Hacker News
-        </Typography>
-      </AppBar>
       <Paper elevation={4}>
         <List>
           {news.length
-            ? news.map((newsItem) => <NewsItem news={newsItem} key={newsItem.id} />)
+            ? news.map((newsItem) => (
+              <NewsItem
+                news={newsItem}
+                key={newsItem.id}
+              />
+            ))
             : <Placeholder />}
         </List>
       </Paper>
