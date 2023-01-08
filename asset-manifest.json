@@ -1,10 +1,10 @@
 {
   "files": {
-    "main.js": "/static/js/main.b7689f64.js",
-    "index.html": "/index.html",
-    "main.b7689f64.js.map": "/static/js/main.b7689f64.js.map"
+    "main.js": "/avito-tech-internship/static/js/main.a9439e85.js",
+    "index.html": "/avito-tech-internship/index.html",
+    "main.a9439e85.js.map": "/avito-tech-internship/static/js/main.a9439e85.js.map"
   },
   "entrypoints": [
-    "static/js/main.b7689f64.js"
+    "static/js/main.a9439e85.js"
   ]
 }
