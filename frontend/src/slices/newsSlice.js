@@ -1,15 +1,21 @@
+/* eslint-disable no-param-reassign */
 import { createSlice, createEntityAdapter } from '@reduxjs/toolkit';
 
 const newsAdapter = createEntityAdapter({
   sortComparer: (a, b) => a.id > b.id,
 });
 
-const initialState = newsAdapter.getInitialState();
+const initialState = newsAdapter.getInitialState({
+  isLoading: 'idle',
+});
 
 const slice = createSlice({
   name: 'news',
   initialState,
   reducers: {
+    changeLoadingStatus: (state, { payload }) => {
+      state.isLoading = payload;
+    },
     addNews: (state, { payload }) => {
       if (state.ids.length) {
         const { ids } = state;

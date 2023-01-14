@@ -3,7 +3,8 @@ import paths from './routes';
 import store from './slices';
 import { actions as newsActions } from './slices/newsSlice';
 
-const fetchNews = () => {
+const fetchNews = (isUserUpdate = false) => {
+  store.dispatch(newsActions.changeLoadingStatus('pending'));
   const currentNewsIds = store.getState().news.ids;
   axios.get(paths.getNewsListUrl())
     .then((resp) => {
@@ -29,9 +30,12 @@ const fetchNews = () => {
       if (news.length) {
         store.dispatch(newsActions.addNews(news));
       }
+      store.dispatch(newsActions.changeLoadingStatus('idle'));
     })
     .finally(() => {
-      setTimeout(fetchNews, 60000);
+      if (!isUserUpdate) {
+        setTimeout(fetchNews, 60000);
+      }
     });
 };
 

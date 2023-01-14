@@ -6,6 +6,7 @@ import {
   Paper,
   Skeleton,
   Stack,
+  Snackbar,
 } from '@mui/material';
 import { useSelector } from 'react-redux';
 import { selectors } from '../slices/newsSlice';
@@ -32,6 +33,7 @@ function Placeholder() {
 export default function NewsFeed() {
   const newsObj = useSelector(selectors.selectEntities);
   const news = Object.values(newsObj).reverse();
+  const isSnackbarOpen = useSelector((state) => state.news.isLoading) === 'pending';
 
   return (
     <Container sx={{ mt: '50px' }}>
@@ -47,6 +49,12 @@ export default function NewsFeed() {
             : <Placeholder />}
         </List>
       </Paper>
+      <Snackbar
+        open={isSnackbarOpen}
+      //  onClose={handleToastClose}
+        autoHideDuration={4000}
+        message="Updating the feed..."
+      />
     </Container>
   );
 }
