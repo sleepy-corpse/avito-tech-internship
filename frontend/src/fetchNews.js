@@ -12,7 +12,7 @@ const fetchNews = (isUserUpdate = false) => {
       const idsToFetch = currentNewsIds.length
         ? newsIdList.filter((newsId) => !currentNewsIds.includes(newsId))
         : newsIdList;
-      const newsPromises = idsToFetch.map((newsId) => axios.get(paths.getNewsByIdUrl(newsId)));
+      const newsPromises = idsToFetch.map((newsId) => axios.get(paths.getItemByIdUrl(newsId)));
       return Promise.all(newsPromises);
     })
     .then((newsResponses) => {

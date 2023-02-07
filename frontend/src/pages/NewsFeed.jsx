@@ -51,7 +51,6 @@ export default function NewsFeed() {
       </Paper>
       <Snackbar
         open={isSnackbarOpen}
-      //  onClose={handleToastClose}
         autoHideDuration={4000}
         message="Updating the feed..."
       />

@@ -3,5 +3,8 @@
   "packageManager": "yarn@3.3.0",
   "workspaces": [
     "frontend"
-  ]
+  ],
+  "scripts": {
+    "start":"cd ./frontend && yarn start"
+  }
 }

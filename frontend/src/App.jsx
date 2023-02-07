@@ -14,10 +14,6 @@ import Article from './pages/Article';
 import NewsFeed from './pages/NewsFeed';
 import fetchNews from './fetchNews';
 
-/* const updateFeed = () => {
-
-}; */
-
 export default function App() {
   useEffect(() => {
     fetchNews();
